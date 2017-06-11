@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>总入口</title>
+    <link type="text/css" rel="stylesheet" href="frame/body.css"/>
+    <script type="text/javascript" src="js/common/auto_websoket.js" language="JavaScript"></script>
+    <script type="text/javascript" language="JavaScript">
+        function selectCmdPram(pJson){
+            //alert(pJson.cmd);
+            switch(pJson.cmd)
+            {
+                case 10:
+                 alert(pJson.info);
+                    break;
+            }
+        }
+    </script>
+</head>
+
+<body>
+
+<div class="container" id="body" >
+	<iframe class="header"  src="frame/header.html" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+    <iframe class="sidebar1"  src="frame/sidbar.html"  frameborder="0" marginheight="0" marginwidth="0"></iframe>
+    <iframe class="footer" width="100%" height="50" scrolling="no" src="frame/footer.html" frameborder="0" marginheight="0" marginwidth="0"></iframe>
+
+</div><!--container -->
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+
+<title>提交SQL</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<style type="text/css">
+    .sidebar1 {
+        float: left;
+        width: 30%;
+
+    }
+</style>
+<script src="js/mgr/js/common/common.js" type="text/javascript"></script>
+<script src="js/mgr/js/common/constant.js" type="text/javascript"></script>
+<script type="text/javascript" src="js/mgr/js/common/auto_websoket.js"></script>
+
+<script src="js/mgr/js/user/gs_sql_receive.js" type="text/javascript"></script>
+<script src="js/mgr/js/user/gs_sql_event.js" type="text/javascript"></script>
+
+
+</head>
+<body>
+<div style="padding-bottom: 50px">
+     <!-- 这是选择部分-->
+     </br><span>请选产品</span>
+         <select id="select1" onChange="setProductValue(this)"> </select>
+         </br><input id="allCheckbox" type="checkbox" onClick="checkBoxAllClick(this)">全部
+         <!-- 这是区域部分-->
+         <frome name="form1" id="from1"></frome>
+</div>
+<div>
+	<!-- 这是文本部分-->
+	    <textarea id="textarea"  cols="100" rows="30"></textarea>
+        <button onClick="selectBtnClick(this)" target="_blank">执行</button>
+
+</div>
+</body>
+</html>

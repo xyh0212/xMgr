@@ -1,0 +1,27 @@
+<link type="text/css" rel="stylesheet" href="body.css"/>
+<style type="text/css">
+    body{
+        background-color: #8090AB;
+    }
+</style>
+<script type="text/javascript" language="JavaScript" src="../js/common/common.js"></script>
+<script type="text/javascript" language="JavaScript" src="../js/common/jquery.min.js"></script>
+<script type="text/javascript" language="JavaScript">
+ window.onload=function(){
+ var i = getCookie("privilige");
+     var  arrUl = document.getElementById("ulid").childNodes;
+     if (i!=1){
+	    $("li#li1").hide();
+		 $("li#li2").hide();
+     }
+
+ }
+</script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<ul class="nav" id="ulid" >
+    <li><a href="../gs_sql.html" target="_top" >提交SQL</a></li>
+    <li><a href="../gs_sqlfile.html" target="_top">提交SQL脚本</a></li>
+    <li id="li1"><a href="../gs_mgr.html" target="_top">游服管理</a></li>
+    <li id="li2"><a href="../user_mgr.html" target="_top">用户管理</a></li>
+</ul>
+

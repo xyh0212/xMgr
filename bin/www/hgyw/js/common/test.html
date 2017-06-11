@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<head>
+    <title>test</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link href="../../css/table.css" rel="stylesheet">
+    <link href="../../bootstrap/css/bootstrap.css" rel="stylesheet">
+
+    <script type="text/javascript" src="../mgr/js/common/common.js" language="JavaScript"></script>
+    <script type="text/javascript" src="ui.js" language="JavaScript"></script>
+    <script type="text/javascript" src="test.js" language="JavaScript"></script>
+</head>
+<body>
+<div align="center">
+    <div>
+        <input type="button" value="Table" onclick="btnTableHandleClick()"/>
+        <div id="table"></div>
+        <hr/>
+    </div>
+    <div>
+        <input type="button" value="Pagination" onclick="btngPaginationHandleClick()"/>
+        <div id="pagination"></div>
+        <hr/>
+    </div>
+    <div>
+        <input type="button" value="CheckBoxGroup" onclick="btnCheckBoxGroupHanleClick()"/>
+        <div id="checkbox_group"></div>
+        <hr/>
+    </div>
+    <div>
+        <input type="button" value="DropList" onclick="btnDropListHandleClick()"/>
+        <div id="drop_list"></div>
+        <hr/>
+    </div>
+    <div>
+        <input type="button" value="table"/>
+        <div id="tafble"></div>
+        <hr/>
+    </div>
+</div>
+<div>
+    <input type="datetime-local" id="date" value="2015-03-05T17:59:00"/>
+    <input type="button"  onclick="dateClick()"/>
+
+</div>
+<input type="text" maxlength="6" onkeyup="this.value=this.value.replace(/\D/g,'')"  />
+<table border=1 >
+    <tr>
+    <td width="30%">dd</td>
+    <td>kajf</td>
+    <td width="30%">dd</td>
+</tr>
+    <tr>
+        <td width="30%">dd</td>
+        <td><input type="text"/></td>
+        <td width="30%">dd</td>
+    </tr>
+</table>
+</body>
+</html>

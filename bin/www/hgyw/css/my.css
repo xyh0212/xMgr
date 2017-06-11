@@ -1,0 +1,46 @@
+.middle {
+    padding: 10px 0;
+    width: 100%;
+    padding-bottom: 10px;
+
+}
+.redcolor{
+
+    color:#D9E0E2;
+}
+.padding{
+    padding-top: 4%;
+}
+.sidebar1 {
+    float: left;
+    width: 15%;
+    height: 800px;
+    background-color: #93A5C4;
+
+}
+
+.header {
+    height:100px;
+    width: 100%;
+    background-color: #6F7D94;
+}
+.content {
+    padding: 10px 0;
+    width: 80%;
+    float: left;
+}
+/* ~~ 脚注 ~~ */
+.footer {
+    padding: 30px 0;
+    background-color: #6F7D94;
+    position: relative;/* 这可以使 IE6 hasLayout 以正确方式进行清除 */
+    clear: both; /* 此清除属性强制 .container 了解列的结束位置以及包含列的位置 */
+}
+
+.contenth{
+    width: 50px;
+}
+body {
+    padding-top: 89px;
+
+}

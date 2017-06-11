@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DB>
+	<host>192.168.0.200</host>
+	<port>3306</port>
+	<db>xmgr</db>
+	<user>kofront</user>
+	<pass>skiK@983.ff</pass>
+	<extra>charset=utf8</extra>
+	<!-- ExcuSqlFile的时候需要latin1，否则乱码 -->
+	<default-character>latin1</default-character>
+</DB>
+

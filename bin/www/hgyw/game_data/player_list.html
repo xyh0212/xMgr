@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+    <title>邮件单发</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link href="../bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="../css/table.css" rel="stylesheet">
+    <link href="css/player.css" rel="stylesheet">
+    <!--game_data的common-->
+    <script src="js/common.js" type="text/javascript"></script>
+
+    <script src="../js/common/constant.js" type="text/javascript"></script>
+    <script src="../js/common/ui.js" type="text/javascript"></script>
+    <script src="../js/mgr/js/common/common.js" type="text/javascript"></script>
+    <script src="../js/mgr/js/common/jquery.min.js" type="text/javascript" language="javascript"></script>
+    <script src="../js/mgr/js/common/http_connection.js" type="text/javascript"></script>
+    <script language="JavaScript">
+        var gDropListGs //
+        var gDropListChannel //
+        var gPageHandle//
+        window.onload = function () {
+            var json = {"table_id": 2};
+            HttpConn("/id_name", json, initGs);
+            json["table_id"] = 3;
+            HttpConn("/id_name", json, initChannel);
+
+        }
+
+        function initGs(data) {
+            if (data.cmd == 1) {
+                var info = JSON.parse(data.info);
+                gDropListGs = new DropListHandle(info.info)
+                document.getElementById("gs").appendChild(gDropListGs.DropList);
+                return
+            }
+            if (data.cmd == 10) {
+                alert(data.info)
+                return
+            }
+        }
+        function initChannel(data) {
+            if (data.cmd == 1) {
+                var info = JSON.parse(data.info);
+                gDropListChannel = new DropListHandle(info.info)
+                gDropListChannel.setItemAll()
+                document.getElementById("channel_type").appendChild(gDropListChannel.DropList);
+                return
+            }
+            if (data.cmd == 10) {
+                alert(data.info)
+                return
+            }
+        }
+
+        var gJson = {"gs":"","channel":"","page":1};
+        function sureOnClick() {
+            var arrChan = gDropListChannel.getValue();
+            var gs = gDropListGs.getValue();
+            ///连接服务端
+            if (arrChan==""){
+                var arr = gDropListChannel.getAllValue()
+                //alert(arr)
+                for (var i=0;i<arr.length;i++){
+                    arrChan+=arr[i]+','
+                }
+                arrChan= arrChan.substring(0,arrChan.length-1)
+            }
+            gJson["gs"]=gs;gJson["channel"]=arrChan;
+            HttpConn("/player_list", gJson, initTable);
+
+        }
+
+        function initTable(data){
+            //alert("1")
+            if (data.cmd == 1) {
+                var info = JSON.parse(data.info);
+                var arrData = info.info
+
+                for (var i=1;i<arrData.length;i++){
+                    arrData[i][6]=formatDate(arrData[i][6])
+                    arrData[i][5]=formatTime(arrData[i][5])
+                }
+                var gTableHandle = new TableHandle(arrData)
+
+                gTableHandle.setFirstRow(TABLE_FIELD_PLAYER)
+                gTableHandle.insertColumn(setPlayerContent)
+                document.getElementById("table").innerHTML=null
+                document.getElementById("table").appendChild(gTableHandle.Table)
+
+                info = JSON.parse(data.info2);
+                var page = info.info[0];
+               if (page==0){
+                   arr = [0, 0, 0]
+                }else {
+                   arr = [gJson["page"], Math.ceil(page/50), page]
+               }
+
+                var pagination = document.getElementById("pagination")
+                pagination.innerHTML=null
+
+                gPageHandle = new PageHandle(arr)
+                pagination.appendChild(gPageHandle.Pagination)
+                gPageHandle.innitEvent(gPageHandle,pageClick)
+                return
+            }
+            if (data.cmd == 10) {
+                alert(data.info)
+                return
+            }
+        }
+        function pageClick(e){
+            gJson["page"]=e
+            sureOnClick()
+        }
+
+
+    </script>
+</head>
+<body>
+
+<div style="padding-top: 30px">
+    <span > 游服：</span>
+    <span id="gs"> </span>
+</div>
+
+
+<div>
+<span id="channel_type" style="padding-right: 50px"> 渠道类型：</span>
+<input type="button" id="submit" value="确认" onclick="sureOnClick()">
+</div>
+<hr/>
+
+
+<div  id="table" >
+</div>
+<div id="pagination" ></div>
+
+</body>
+</html>

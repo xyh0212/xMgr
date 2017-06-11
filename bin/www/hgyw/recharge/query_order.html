@@ -1,0 +1,220 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+    <title>玩家角色名</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link href="../bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="../css/table.css" rel="stylesheet">
+    <link href="css/recharge.css" rel="stylesheet">
+
+    <script src="../js/common/constant.js" type="text/javascript"></script>
+    <script src="../js/common/mydate.js" type="text/javascript"></script>
+    <script src="../js/common/ui.js" type="text/javascript"></script>
+    <script src="../js/mgr/js/common/common.js" type="text/javascript"></script>
+    <script src="../js/mgr/js/common/jquery.min.js" type="text/javascript" language="javascript"></script>
+    <script src="../js/mgr/js/common/http_connection.js" type="text/javascript"></script>
+    <script language="JavaScript">
+        var gDropListGs //
+        var gArrSdkType //
+        window.onload = function () {
+            var json = {"table_id": 2};
+            HttpConn("/id_name", json, initGs);
+            HttpConn("/id_name", {"table_id": 3}, initSdkType);
+        }
+
+        function initGs(data) {
+            if (data.cmd == 1) {
+                var info = JSON.parse(data.info);
+                //alert(info.info)
+                gDropListGs = new DropListHandle(info.info)
+                document.getElementById("gs").appendChild(gDropListGs.DropList);
+                return
+            }
+            if (data.cmd == 10) {
+                alert("错误："+data.code+"\n信息："+data.info)
+                return
+            }
+        }
+         function  initSdkType(data){
+             if (data.cmd == 1) {
+                 var info = JSON.parse(data.info);
+                 gArrSdkType= info.info
+                //alert(gArrSdkType)
+                 return
+             }
+             if (data.cmd == 10) {
+                 alert("错误："+data.code+"\n信息："+data.info)
+                 return
+             }
+         }
+        function initTable(data){
+            if (data.cmd == 1) {
+                var info = JSON.parse(data.info);
+                var arrData = info.info
+
+                var gTableHandle = new TableHandle(arrData)
+                gTableHandle.insertColumn(setColum)
+
+                gTableHandle.setFirstRow(TABLE_FIELD_QUERY_ORDER)
+                document.getElementById("table").innerHTML=null
+                document.getElementById("table").appendChild(gTableHandle.Table)
+
+                info = JSON.parse(data.info2);
+                var page = info.info[0];
+                var arr
+                if (page==0){
+                    arr = [0, 0, 0]
+                }else {
+                    arr = [gJson["page"], Math.ceil(page/50), page]
+                }
+                var pagination = document.getElementById("pagination")
+                pagination.innerHTML=null
+
+                gPageHandle = new PageHandle(arr)
+                pagination.appendChild(gPageHandle.Pagination)
+                gPageHandle.innitEvent(gPageHandle,pageClick)
+                return
+            }
+            if (data.cmd == 10) {
+                alert("错误："+data.code+"\n信息："+data.info)
+                return
+            }
+        }
+
+        //默认为第一页
+        var gJson = {"gs":"","date":"","order_number":1,"page":1,"user_name":""};
+        function sureOnClick() {
+            gJson["page"]=1;
+            gJson["gs"]=gDropListGs.getValue();
+            var start_time= getStartDateValue("start_time");
+            var end_time =getEndDateValue("end_time");
+            if (start_time!=null&&end_time==null){
+                gJson["start_time"]=start_time
+                gJson["end_time"]=getEndTadayDate()
+                //alert(gJson["end_time"])
+            }else if (start_time==null&&end_time!=null){
+                gJson["start_time"]=getStartTadayDate()
+                gJson["end_time"]=end_time
+            }else {
+                gJson["start_time"]=start_time
+                gJson["end_time"]=end_time
+            }
+
+            gJson["start_money"]=document.getElementById("start_money").value.trim();
+            gJson["end_money"]=document.getElementById("end_money").value.trim();
+
+            gJson["order_number"]=document.getElementById("order_number").value.trim();
+            gJson["user_name"]=document.getElementById("user_name").value.trim();
+            submitData()
+
+        }
+        function submitData(){
+            HttpConn("/query_order", gJson, initTable);
+        }
+
+
+        function pageClick(e){
+            gJson["page"]=e
+            submitData()
+        }
+        function setColum(rows) {
+            var rowsLen = rows.length;
+            var cellsLen = rows.item(0).cells.length;
+            //设置充值结果的显示
+            for (var i = 1; i < rowsLen; i++) {
+                var value =rows[i].cells[cellsLen-1].innerHTML
+                if (value=="104"){
+                    rows[i].cells[cellsLen-1].innerHTML="成功"
+                }else if (value=="0"){
+                    rows[i].cells[cellsLen-1].innerHTML=null
+                    var ck = document.createElement("input");
+                    ck.type = "button";
+                    ck.value = "补单"
+                    ck.className="ClassName"
+                    ck.id= rows[i].cells[1].innerHTML
+                    rows[i].cells[cellsLen-1].appendChild(ck);
+                }else if(value=="6"){
+                    rows[i].cells[cellsLen-1].innerHTML="金额错误"
+                }else if(value=="7"){
+                    rows[i].cells[cellsLen-1].innerHTML="超时"
+                }
+                //设置金额的显示
+                var money = Number(rows[i].cells[cellsLen-2].innerHTML)
+                rows[i].cells[cellsLen-2].innerHTML = (money / 10).toFixed(2)
+                //设置金额的显示
+                var channelName =rows[i].cells[3].innerHTML
+                for (var j=1 ;j<gArrSdkType.length;j++){
+                    if (channelName==gArrSdkType[j][0]){
+                        rows[i].cells[3].innerHTML=gArrSdkType[j][1]
+                    }
+                }
+
+            }
+        }
+        document.onclick=function(e){
+
+            var name =e.target.className
+            if (name=="ClassName"){
+                if (!confirm("确定补单？")){
+                    return
+                }
+                gJson=null
+                gJson={"order":e.target.id,"gs":gDropListGs.getValue()}
+                HttpConn("/resupply_order", gJson, rec);
+            }
+            return
+        }
+        function clearOnClick(){ //getDateTime()
+            document.getElementById("start_time").value=null
+            document.getElementById("end_time").value=null
+            document.getElementById("start_money").value=null;
+            document.getElementById("end_money").value=null;
+            document.getElementById("order_number").value=null;
+            document.getElementById("user_name").value=null;
+        }
+
+    </script>
+</head>
+<body>
+
+<div style="padding-top: 30px">
+    <span > 游服：</span>
+    <span id="gs"> </span>
+</div>
+<hr/>
+
+<span class="input-group " style="width: 500px">
+    <span class="input-group-addon">开始时间</span>
+    <input type="text" id="start_time" onfocus="MyCalendar.SetDate(this)" class="form-control" placeholder="开始时间"/>
+    <span class="input-group-addon">结束时间</span>
+    <input type="text" id="end_time"   onfocus="MyCalendar.SetDate(this)" class="form-control"placeholder="结束时间"/>
+</span>
+
+<span class="input-group " style="width: 500px">
+    <span class="input-group-addon">开始金额</span>
+    <input type="text" id="start_money" class="form-control" placeholder="请输入金额">
+    <span class="input-group-addon">结束金额</span>
+    <input type="text" id="end_money" class="form-control" placeholder="请输入金额">
+</span>
+
+<span class="input-group " style="width: 300px">
+    <span class="input-group-addon">&nbsp;&nbsp;&nbsp;&nbsp;订单号</span>
+    <input type="text" id="order_number" class="form-control" placeholder="请输入订单号">
+</span>
+<span class="input-group " style="width: 300px">
+    <span class="input-group-addon">用户名称</span>
+    <input type="text" id="user_name" class="form-control" placeholder="请输入用户名称">
+</span>
+
+<div class="btn-group" >
+    <span style="padding-right: 30px"><button type="button" class="btn btn-default" onclick="sureOnClick()" >提交</button></span>
+    <span><button type="button" class="btn btn-default" onclick="clearOnClick()" >清除</button></span>
+</div>
+<hr/>
+
+<div  id="table" >
+</div>
+<div id="pagination" ></div>
+</body>
+</html>

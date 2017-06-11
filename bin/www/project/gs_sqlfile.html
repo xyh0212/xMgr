@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>提交SQL脚本</title>
+<link type="text/css" rel="stylesheet" href="frame/body.css" />
+ <script src="js/common/auto_websoket.js" type="text/javascript"></script>
+ <script src="js/common/common.js" type="text/javascript"></script>
+ <script src = "js/common/constant.js" type="text/javascript"></script>
+ <script type="text/javascript" language="javascript" src="js/common/jquery.min.js"></script>
+ <script type="text/javascript" language="javascript" src="js/common/jquery.form.js"></script>
+
+<script  src="js/user/user_receive.js" type="text/javascript"></script>
+<script src = "js/user/user_event.js" type="text/javascript"></script>
+<script  src="js/common/http_connection.js" type="text/javascript"></script>
+
+<script type="text/javascript" language="javascript">
+function selectUploadCmdPram(mes){
+  var pJson = JSON.parse(mes);
+  
+  switch(Number(pJson.cmd))
+  {
+    case 1:
+//	alert(pJson.info)
+	HttpConnetion(pJson.info);
+    break; 
+    case 10:
+	var str = "错误命令："+pJson.cmd+"错误信息："+pJson.info;
+    alert(str);
+    break;
+  }
+}
+
+function sqlExceClick(){////////http://localhost:8888
+var str ='/upload?user=lkdfgl&session='+getCookie("session")+'&filekey='
+var form = document.getElementById("form2");
+var Nodes = form.childNodes; 
+    for (var i=0;i<Nodes.length;i++){
+	     str += Nodes[i].name+":"
+	}
+	str=str.substring(0,str.length-1)
+//	alert (str);
+   HttpFileConnetion(str);
+   $("#form2").submit();
+
+}
+function addClick(){
+var form = document.getElementById("form2");
+var div = document.createElement("div");
+    div.name = "file"+form.childNodes.length
+var newdiv = document.createElement("input");
+newdiv.name= "file"+form.childNodes.length;
+div.appendChild(newdiv)
+newdiv.type="file"
+form.appendChild(div);
+}
+
+function deleteClick(){
+var form = document.getElementById("form2");
+var len = form.childNodes.length; 
+form.removeChild(form.childNodes[len-1])
+}
+</script>
+<body>
+
+<div class="container">
+ <iframe class="header"  width="100%" height="100" src="frame/header.html" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+  <div class="sidebar1" style="background-color:#8090AB">
+  <!-- 这是选择部分-->
+     </br><span>请选产品</span>
+     <select name="" id ="select1" onChange="setProductValue(this)">  </select> 
+     </br><input id="allCheckbox" type ="checkbox" onClick="checkBoxAllClick(this)">全部 
+
+     <!-- 这是区域部分-->
+     <form name="form1" id="from1">  </form>
+    <!-- end .sidebar1 --></div>
+  <div class="content">
+  <input type="button" value="添加" onclick ="addClick()"/>
+  <input type="button" value="删除" onclick ="deleteClick()"/>
+  <input type="button" value="执行sql" id="bt" onclick ="sqlExceClick()"/></br>
+
+  <form id="form2" enctype="multipart/form-data">
+
+  </form>
+    <!-- end .content --></div>
+ <iframe  class="footer" width="100%"  height="30" scrolling="no" src="frame/footer.html" frameborder="0"  marginheight="0" marginwidth="0"></iframe>  
+  <!-- end .container --></div>
+</body>
+</html>

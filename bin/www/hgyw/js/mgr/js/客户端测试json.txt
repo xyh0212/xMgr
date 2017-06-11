@@ -1,0 +1,21 @@
+
+var Gjson ={"num":2,
+"p":[
+	{
+		"name":"android",
+		"gs_num":2,
+		"gs":[
+		  {"name":"androd1","id":1},
+	          {"name":"android2","id":2}
+             ]
+	},
+	{
+		"name":"yueyu",
+		"gs_num":2,
+		"gs":[
+		      {"name":"yueyu1","id":1},
+	           {"name":"yueyu2","id":2}
+             ]
+	}
+]
+};

@@ -1,0 +1,16 @@
+
+ div.input-group {
+    width: 300px;
+
+}
+div span span{
+    color: red;
+}
+div {
+    padding-bottom: 20px;
+}
+
+ .sidebar {
+     float: left;
+     width: 15%;
+ }

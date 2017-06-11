@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head   >
+<title>游服管理</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link href="../bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="../css/table.css" rel="stylesheet">
+    <script src="js/mgr/js/common/table.js" type="text/javascript"></script>
+
+    <script src="../js/common/constant.js" type="text/javascript"></script>
+    <script src="../js/common/ui.js" type="text/javascript"></script>
+    <script src="../js/mgr/js/common/common.js" type="text/javascript"></script>
+    <script src="../js/mgr/js/common/jquery.min.js" type="text/javascript" language="javascript"></script>
+    <script src="../js/mgr/js/common/http_connection.js" type="text/javascript"></script>
+    <script language="JavaScript">
+        var gJson = {"table_id": 1000,"page":1};
+        var gPageHandle//分页的引用
+        var gTableHandle//表格引用
+        var ws //websoket 长连接
+        window.onload = function () {
+            WebSocketConn(webSoket)
+            pageClick(1)
+        }
+        function webSoket(wss,data){
+            if (data.cmd==5){
+                ws =wss
+            }
+            if (data.cmd==16){
+            }
+
+        }
+        function initTable(data){
+            if (data.cmd == 1) {
+                var info = JSON.parse(data.info);
+                 gTableHandle = new TableHandle(info.info)
+                gTableHandle.setFirstRow(TABLE_FIELD_GS)
+                gTableHandle.insertColumBtn()
+                var s=[4,4,4,4,4,10,4,4,4,14,1]
+                gTableHandle.setTextSize(s)
+                document.getElementById("table").innerHTML=null
+                document.getElementById("table").appendChild(gTableHandle.Table)
+
+                info = JSON.parse(data.info2);
+                var page = info.info[0];
+                var arr
+                if (page==0){
+                    arr = [0, 0, 0]
+                }else {
+                    arr = [gJson["page"], Math.ceil(page/50), page]
+                }
+                var pagination = document.getElementById("pagination")
+                pagination.innerHTML=null
+                gPageHandle = new PageHandle(arr)
+                pagination.appendChild(gPageHandle.Pagination)
+                gPageHandle.innitEvent(gPageHandle,pageClick)
+                return
+            }
+            if (data.cmd == 10) {
+                alert(data.info)
+                return
+            }
+        }
+        function pageClick(e){
+            gJson["page"]=e
+            HttpConn("/table", gJson, initTable);
+        }
+
+        document.onclick=function(e){
+            var name = e.target.className
+            if (name=="deleteName"){
+
+
+            }else if (name=="editName"){
+                gTableHandle.insertRowText(e.target.name)
+            }else if (name=="save"){
+                var s=gTableHandle.getRowTextValue()
+                alert(s)
+            }
+        }
+    </script>
+</head>
+<body>
+<div style="padding-top: 30px" id="table"></div>
+
+<div id="pagination" ></div>
+</body>
+</html>

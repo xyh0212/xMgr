@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>test</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script src="jquery.min.js" type="text/javascript" ></script>
+<script language="javascript">
+/////////全黑////////////////////////////////////////////////
+function  QHGetClick(){
+    var url = "/hotgame/kd/sdk/cb/qunhei_login_cb.php?username=$username&time=$time&isadult=$isadult&flag=27c1bb494753317df065bdb883d7815b&id=xyh";
+        $.get(url,function(data,status){
+            document.write(data)
+        });
+}
+function  QHPostClick(){
+    $.post("/hotgame/kd/sdk/cb/qunhei_login_cb.php",
+         {
+          username:"$username",
+             time:"$time",
+         },
+         function(data,status){
+          alert("Data: " + data + "\nStatus: " + status);
+          });
+}
+///////彩果/////////////////////////////////////////////
+function  CGGetClick(){
+    var url = "/hotgame/kd/sdk/cb/caiguo_login_cb.php?uid=$username&uname=name&sign=686388278fd40604bc6a462874cc3dbb";
+    $.get(url,function(data,status){
+        document.write(data)
+    });
+}
+///////9g/////////////////////////////////////////////
+function  JgGetClick(){
+    var url = "/hotgame/kd/sdk/cb/9g_login_cb.php?token=TOKEN";
+    $.get(url,function(data,status){
+        document.write(data)
+    });
+}
+</script>
+</head>
+<button onclick="QHGetClick()"> 测试群黑GET</button>
+<button onclick="QHPostClick()"> 测试群黑POST</button>
+<hr/>
+<button onclick="CGGetClick()"> 测试彩果GET</button>
+<hr/>
+<button onclick="JgGetClick()"> 测试9gGET</button>
+<hr/>
+</body>
+</html>
+

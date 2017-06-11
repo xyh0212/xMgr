@@ -1,0 +1,43 @@
+<html> 
+<head> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>查询sql的列表</title>
+ <script src="js/mgr/js/common/common.js" type="text/javascript"></script>
+ <script src="js/mgr/js/common/auto_websoket.js" type="text/javascript"></script>
+ <script type="text/javascript">
+  function selectCmdPram(pJson){
+   switch(pJson.cmd)
+   {
+    case 3:
+     var str ="";
+     for(var i=0;i<pJson.sql.length;i++){
+      str += pJson.sql[i]+'</br>';
+     }
+     document.getElementById("resultdiv").innerHTML =str;
+     break;
+    case 5:
+     //查询session
+     ws.send(getQuerySqlCmdJson());
+     break;
+    case 10:
+     var str = pJson.info
+     document.getElementById("resultdiv").innerHTML =str;
+
+     break;
+   }
+  }
+  function getQuerySqlCmdJson(){
+   var CheckedJsonStr= getUrlValue("CheckedJsonStr");
+   var sql =getUrlValue("sqlJson");
+   sql=encodeURIComponent(sql)
+   sql =',"sql":"'+sql+'"';
+   var str = '{"cmd":3,"param":{'+CheckedJsonStr+sql+'}}';
+   return str;
+  }
+ </script>
+</head> 
+<body> 
+<from id="resultdiv"></from>
+
+</body> 
+</html> 

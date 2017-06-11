@@ -1,0 +1,13 @@
+quselect {
+    border: solid 1px #000;
+  
+    appearance:none;
+    -moz-appearance:none;
+    -webkit-appearance:none;
+	text-align:right;
+    padding-right: 80px;
+    background: url("arrow.png") no-repeat scroll right center transparent;
+}
+
+
+select::-ms-expand { display: none; }

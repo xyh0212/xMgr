@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>提交SQL脚本2</title>
+
+    <script src="../game_data/js/gs_sqlfile2.js" type="text/javascript"></script>
+
+    <script src="../js/mgr/js/common/common.js" type="text/javascript"></script>
+    <script src="../js/common/ui.js" type="text/javascript"></script>
+    <script src="../js/mgr/js/common/http_connection.js" type="text/javascript"></script>
+    <script src="../js/mgr/js/common/jquery.min.js" type="text/javascript" language="javascript" ></script>
+    <script src="../js/mgr/js/common/jquery.form.js" type="text/javascript" language="javascript" ></script>
+
+    <script type="text/javascript" language="javascript">
+
+        function selectUploadCmdPram(mes) {
+            var pJson = JSON.parse(mes);
+
+            switch (Number(pJson.cmd)) {
+                case 1:
+                    HttpConnetion(pJson.info);
+                    break;
+                case 10:
+                    var str = "错误命令：" + pJson.cmd + "错误信息：" + pJson.info;
+                    alert(str);
+                    break;
+            }
+        }
+
+        function sqlExceClick() {////////http://localhost:8888
+            var str = '/upload?user=1'+'&filekey='
+            var form = document.getElementById("form2");
+            var Nodes = form.childNodes;
+           // alert(Nodes.length)
+            for (var i = 0; i < Nodes.length; i++) {
+                str += Nodes[i].name + ":"
+            }
+            var filepath = str.substring(0, str.length - 1)
+
+            HttpFileConn(filepath,rec);
+            $("#form2").submit();
+        }
+        function  rec(data){
+            var path= "/post?path="+data.info+"&"+getCheckedStr()
+           // alert(path)
+            HttpGetConn(path)
+        // document.write(data.info)
+        }
+        function addClick() {
+            var form = document.getElementById("form2");
+            var div = document.createElement("div");
+            div.name = "file" + form.childNodes.length
+            var newdiv = document.createElement("input");
+            newdiv.name = "file" + form.childNodes.length;
+            div.appendChild(newdiv)
+            newdiv.type = "file"
+            form.appendChild(div);
+        }
+
+        function deleteClick() {
+            var form = document.getElementById("form2");
+            var len = form.childNodes.length;
+            form.removeChild(form.childNodes[len - 1])
+        }
+    </script>
+<body>
+<span class="sidebar1">
+
+     <div style="padding-bottom: 50px" id="content"></div>
+      </span>
+	  
+	  
+     <span>
+  <input type="button" value="添加文件" onclick="addClick()"/>
+  <input type="button" value="删除" onclick="deleteClick()"/>
+  <input type="button" value="执行sql" id="bt" onclick="sqlExceClick()"/></br>
+
+         <form id="form2" enctype="multipart/form-data">
+
+         </form>
+     </span>
+
+</body>
+</html>

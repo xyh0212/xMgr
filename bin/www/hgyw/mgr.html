@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>总入口</title>
+    <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="css/my.css" rel="stylesheet">
+    <script type="application/javascript" language="JavaScript" src="js/extra/jquery.min.js"></script>
+    <script type="application/javascript" language="JavaScript" src="js/mgr/js/common/auto_websoket.js"></script>
+    <script type="application/javascript" language="JavaScript" src="js/mgr/js/common/common.js"></script>
+
+    <script type="application/javascript" language="JavaScript" src="js/mgr/mgr.js"></script>
+</head>
+<body>
+<!------------------------导航栏------------------------------------>
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation" align="center">
+    <div class="container">
+        <div class="navbar-collapse collapse">
+            <div id="show_user" class="redcolor" align="left">user</div>
+            <ul class="nav navbar-nav">
+                <li name="title_li" title="home" > <a name="header" title="home" class="navbar-brand "  >首页</a></li>
+                <li name="title_li" title="game_data"><a name="header" title="game_data" >游戏数据</a></li>
+                <li name="title_li" title="gs"><a name="header" title="gs">游服</a></li>
+                <li name="title_li" title="privilege"><a name="header" title="privilege">权限管理</a></li>
+                <li name="title_li" title="recharge"><a name="header" title="recharge">充值管理</a></li>
+            </ul>
+
+        </div><!--/.nav-collapse -->
+        <div class="redcolor" align="left" id="path_list_name"><a>首页</a></div>
+    </div>
+</div>
+<!------------------------左边的区域------------------------------------>
+
+<div ><!--class="jumbotron"-->
+    <!--------------------------Sql---------------------------------->
+    <div class="sidebar1">
+        <!------------------------首页------------------------------------>
+        <div name="side_list" title="home" id="home_id">
+            <ul class="nav nav-pills nav-stacked">
+                <li class="active">
+                   <a name="side_list_second_a" title="home" >列表1</a>
+                    <ul>
+
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <!------------------------游戏数据------------------------------------>
+        <div  name="side_list" title="game_data"  >
+            <ul class="nav nav-pills nav-stacked">
+                <li class="active">
+                    <a name="side_list_second_a" title="game_data">SQL</a>
+                    <ul >
+                        <li><a name="side_list_third_a" id="exc_sql" >执行SQL</a></li>
+                        <li><a name="side_list_third_a" id="exc_sql2" >执行SQL2</a></li>
+                        <li><a name="side_list_third_a" id="exc_file_sql" >执行SQL脚本</a></li>
+                        <li><a name="side_list_third_a" id="exc_file_sql2" >执行SQL脚本2</a></li>
+                    </ul>
+                </li>
+                <li class="active" >
+                    <a name="side_list_second_a" title="game_dat">邮件管理</a>
+                    <ul >
+                        <li><a name="side_list_third_a" id="emil_single_send" >单发邮件</a></li>
+                        <li><a name="side_list_third_a" id="emil_group_send" >群发邮件</a></li>
+                    </ul>
+                </li>
+                <li class="active" >
+                    <a name="side_list_second_a" title="game_dat">玩家列表</a>
+                    <ul >
+                        <li><a name="side_list_third_a" id="player_list" >玩家列表</a></li>
+                        <li><a name="side_list_third_a" id="player_role" >玩家(角色名)</a></li>
+                        <li><a name="side_list_third_a" id="player_channel_number" >玩家(渠道账号)</a></li>
+                        <li><a name="side_list_third_a" id="player_close" >封号</a></li>
+                        <li><a name="side_list_third_a" id="player_resolve" >解封</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <!------------------------游服列表------------------------------------>
+        <div name="side_list" title="gs" >
+            <ul class="nav nav-pills nav-stacked">
+                <li class="active">
+                    <a name="side_list_second_a" title="gs" >游服列表</a>
+                    <ul>
+                        <li><a name="side_list_third_a" id="gs_mgr" >游服管理</a></li>
+                        <li><a name="side_list_third_a" id="add_gs_mgr" >添加游服</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <!---------------------------用户管理--------------------------------->
+        <div name="side_list" title="privilege">
+            <ul class="nav nav-pills nav-stacked">
+                <li class="active">
+                    <a name="side_list_second_a" title="privilege" >用户管理</a>
+                    <ul>
+                        <li><a name="side_list_third_a" id="user_mgr" >用户管理</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div name="side_list" title="recharge">
+            <ul class="nav nav-pills nav-stacked">
+                <li class="active">
+                    <a name="side_list_second_a" title="privilege" >订单查询</a>
+                    <ul>
+                        <li><a name="side_list_third_a" id="query_order" >订单查询</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</div >
+<!------------------------内容------------------------------------>
+<div id="content_right" align="center">
+
+
+</div>
+
+<!------------------------尾部------------------------------------>
+<div class="footer" align="center">
+    此 .footer 包含 position:relative 声明，以便为 .footer 指定 Internet Explorer 6 hasLayout，并使其以正确方式清除。如果您不需要支持 IE6，则可以将其删除。
+</div>
+</body>
+</html>

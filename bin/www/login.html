@@ -1,0 +1,47 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Writing to Same Doc</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="bootstrap.css" rel="stylesheet">
+  <script language="JavaScript">
+    //重新写入函数
+    window.onload=function(){
+
+      RepeatWrite();
+    }
+    function RepeatWrite(){
+      // 保存写入的内容
+      // 写入新的内容
+      var script =document.createElement("script")
+      script.src="login.js"//placeholder
+      // p.innerHTML="hello"
+      // document.body.
+      document.body.appendChild(script)
+
+      //document.write(newContent);
+      document.close();
+      //placeholder="请输入邮件标题"
+
+      var cls =document.getElementsByClassName("input-group")
+      for(var i=0;i<cls.length;i++){
+
+        cls[i].style.width="500px"
+      }
+    }
+
+  </script>
+
+</head>
+<body>
+ <div id="game_data">
+ </div>
+  	<!--单击按钮调用写入函数-->
+    <input type="button" value="Replace Content" onClick="test()">
+
+ <div class="input-group "  >
+   <span class="input-group-addon">礼包ID<span>(*)</span></span>
+   <input type="text" id="package_id" class="form-control" placeholder="请输入礼包ID">
+ </div>
+<td>osaidjlk</td>
+</body>
+</html>
